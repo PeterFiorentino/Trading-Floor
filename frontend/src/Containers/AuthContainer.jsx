@@ -8,6 +8,7 @@ import SignupForm from '../Components/SignupForm.jsx';
 class AuthContainer extends Component {
     state = {
         username: '',
+        email: '',
         password: '',
     }
 
@@ -31,7 +32,7 @@ class AuthContainer extends Component {
     loginUser = async () => {
         // make network request to /auth/signup to register user
         try {
-            const { data } = await axios.post('http://localhost:3100/auth/login', {username : this.state.username, password: this.state.password} )
+            const { data } = await axios.post('http://localhost:3100/auth/login', {email : this.state.email, password: this.state.password} )
 
             const user = data.payload
             this.props.setUser(user)
@@ -42,22 +43,23 @@ class AuthContainer extends Component {
     }
 
     renderSignUp = () => {
-        const { username, password } = this.state
+        const { username, password, email } = this.state
         return (
         <SignupForm 
             handleChange={this.handleChange}
             username={username}
             password={password}
+            email={email}
             signupUser={this.signupUser}
         />)
     }
 
     renderLogin = () => {
-        const { username, password } = this.state
+        const { email, password } = this.state
         return (
         <LoginForm 
             handleChange={this.handleChange}
-            username={username}
+            email={email}
             password={password}
             loginUser={this.loginUser}
         />)

@@ -3,8 +3,8 @@ import React from 'react';
 
 
 const LoginForm = ({
-  username,
   password,
+  email,
   handleChange,
   loginUser
 }) => {
@@ -22,9 +22,9 @@ const LoginForm = ({
         <input
           className='login-input'
           type="text"
-          name="username"
-          value={username}
-          placeholder="username"
+          name="email"
+          value={email}
+          placeholder="email"
           onChange={handleChange}
         /><br/>
         <i class="fas fa-lock"></i>{"  "}

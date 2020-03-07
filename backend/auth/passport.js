@@ -3,22 +3,22 @@ const LocalStrategy = require('passport-local').Strategy;
 const { comparePasswords } = require('../auth/helpers');
 const usersQueries = require('../queries/users');
 
-passport.use(new LocalStrategy(async (username, password, done) => {
+passport.use(new LocalStrategy({usernameField: "email", passwordField: "password"}, async (email, password, done) => {
   console.log('Authenticating user')
   try {
-    const user = await usersQueries.getUserByUsername(username);
+    const user = await usersQueries.getUserByEmail(email);
     console.log("userrrrrr", user)
 
     if (!user) {
       console.log("no user")
-      // Username not found in the database
+      // email not found in the database
       return done(null, false)
     }
 
     const passMatch = await comparePasswords(password, user.password);
     if (!passMatch) {
       console.log("passmatch running")
-      // Username found but passwords don't match
+      // email found but passwords don't match
       return done(null, false)
     }
 
@@ -37,7 +37,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (user, done) => {
   try {
-    let retrievedUser = await usersQueries.getUserByUsername(user.username)
+    let retrievedUser = await usersQueries.getUserByEmail(user.email)
     delete retrievedUser.password_digest;
     done(null, retrievedUser)
   } catch (err) {

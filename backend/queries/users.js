@@ -5,13 +5,14 @@ const createUser = async (user) => {
   const passwordDigest = await authHelpers.hashPassword(user.password);
 
   const insertUserQuery = `
-      INSERT INTO users (username, password) 
-        VALUES ($/username/, $/password/)
+      INSERT INTO users (username, email, password) 
+        VALUES ($/username/, $/email/, $/password/)
         RETURNING *
     `
 
   const newUser = await db.one(insertUserQuery, {
     username: user.username,
+    email: user.email,
     password: passwordDigest
   })
 
@@ -19,8 +20,8 @@ const createUser = async (user) => {
   return newUser
 }
 
-const getUserByUsername = async (username) => {
-  const user = await db.oneOrNone("SELECT * FROM users WHERE username = $1", [username])
+const getUserByEmail = async (email) => {
+  const user = await db.oneOrNone("SELECT * FROM users WHERE email = $1", [email])
   return user;
 }
 
@@ -32,6 +33,6 @@ const getAllUsers = async () => {
 
 module.exports = {
   createUser,
-  getUserByUsername,
+  getUserByEmail,
   getAllUsers
 }

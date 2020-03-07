@@ -6,10 +6,11 @@ CREATE DATABASE stock_exchange;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR UNIQUE NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
     password VARCHAR NOT NULL
 );
 
-INSERT INTO users (username, password)
-    VALUES ('PeteFiorentino', 'Spotify123');
+INSERT INTO users (username, email, password)
+    VALUES ('PeteFiorentino', 'PFiorentino54@gmail.com','Spotify123');
 
-SELECT * FROM users;
+SELECT * FROM users WHERE email = 'PFiorentino54@gmail.com';
