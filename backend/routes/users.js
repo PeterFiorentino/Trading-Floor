@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const authHelpers = require('../auth/helpers')
+const usersQueries = require('../queries/users')
 
 
 router.get('/', authHelpers.loginRequired, async (req, res, next) => {

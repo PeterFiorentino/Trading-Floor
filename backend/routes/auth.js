@@ -33,3 +33,5 @@ router.post('/logout', authHelpers.loginRequired, (req, res, next) => {
         err: false
     })
 })
+
+module.exports = router
