@@ -25,6 +25,10 @@ const getUserByEmail = async (email) => {
   return user;
 }
 
+const changeCash = async (newCash, user_id) => {
+  const newCash = await db.oneOrNone(`UPDATE user SET cash = $1 WHERE id = $2`, [newCash, user_id])
+  return newCash;
+}
 
 const getAllUsers = async () => {
     const users = await db.any("SELECT * FROM users")
