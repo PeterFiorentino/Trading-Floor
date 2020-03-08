@@ -9,6 +9,7 @@ const NavBar = ({ logoutUser, isUserLoggedIn, user }) => {
                 <Link to='/'>Home</Link>{" "}
                 <Link to='/about'>About</Link>
                 <Link to='/portfolio'>Portfolio</Link>
+                <Link to='/transactions'>Transactions</Link>
                 
                 <button className='logout-button' onClick={logoutUser}>Log Out</button>
             </nav>
@@ -18,10 +19,11 @@ const NavBar = ({ logoutUser, isUserLoggedIn, user }) => {
     return (
         <nav className='main-nav'>
             <Link to='/'>Home</Link>{" "}
-            {/* <Link to='/login'>Log-In</Link>{" "}
-            <Link to='/signup'>Sign-Up</Link>{" "} */}
+            <Link to='/login'>Log-In</Link>{" "}
+            <Link to='/signup'>Sign-Up</Link>{" "}
             <Link to='/about'>About</Link>
-            <Link to='/portfolio'>Portfolio</Link>
+            {/* <Link to='/portfolio'>Portfolio</Link>
+            <Link to='/transactions'>Transactions</Link> */}
         </nav>
     )
 }

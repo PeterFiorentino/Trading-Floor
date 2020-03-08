@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Transactions from './Transactions';
 
 class Portfolio extends React.Component {
     constructor(props) {
@@ -10,7 +11,36 @@ class Portfolio extends React.Component {
             cash: props.user.cash,
             ticker: "",
             quantity: 0,
-            transactions: []
+            transactions: {}
+        }
+    }
+
+    componentDidMount() {
+        console.log(this.state)
+        this.loadTransactions()
+    }
+
+    loadTransactions = async () => {
+        try {
+            let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
+            let transactions = transactionsFromUser.data.payload;
+            let transObj = {};
+            for (let i of transactions) {
+                if(!transObj[i.ticker]) {
+                    transObj[i.ticker] = {}
+                    transObj[i.ticker].moneySpent = Number(i.price_paid) * Number(i.quantity)
+                    transObj[i.ticker].quantity = i.quantity
+                } else {
+                    transObj[i.ticker].moneySpent += (Number(i.price_paid) * Number(i.quantity))
+                    transObj[i.ticker].quantity += i.quantity
+                }
+            }
+            console.log(transObj)
+            this.setState({
+                transactions: transObj
+            })
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -27,7 +57,9 @@ class Portfolio extends React.Component {
             let amountPaid = Number(todaysPrice) * this.state.quantity
             let transaction = await axios.post(`/api/transactions`, {user_id: this.state.user_id, quantity: this.state.quantity, ticker: this.state.ticker, price_paid: Number(todaysPrice)})
             this.setState({
-                cash: this.state.cash - amountPaid
+                cash: this.state.cash - amountPaid,
+                quantity: 0,
+                ticker: ""
             })
             let changeCash = await axios.patch('/api/users', {newCash: this.state.cash, user_id: this.state.user_id})
             console.log(price)
@@ -54,17 +86,14 @@ class Portfolio extends React.Component {
             <div>
                 <p>${this.state.cash}</p>
                 <form onSubmit={this.handlePurchase}>
-                    <input type="text" placeholder="ticker" onChange={this.handleTickerChange}></input>
-                    <input type="number" onChange={this.handleQuantityChange}></input>
+                    <input type="text" placeholder="ticker" onChange={this.handleTickerChange} value={this.state.ticker}></input>
+                    <input type="number" onChange={this.handleQuantityChange} value={this.state.quantity}></input>
                     <button type="submit">Purchase</button>
                 </form>
-                {this.state.transactions.map(transaction => {
-                    return (
-                        <div key={transaction.ticker}>
-                            <p>{transaction.ticker}</p>
-                            <p>{transaction.quantity}</p>
-                            <p>{transaction.price_paid}</p>
-                        </div>
+                {Object.keys(this.state.transactions).map(stock => {
+                    console.log(stock)
+                    return(
+                        <p>{stock} - {this.state.transactions[stock].quantity} Shares   ${this.state.transactions[stock].moneySpent}</p>
                     )
                 })}
             </div>

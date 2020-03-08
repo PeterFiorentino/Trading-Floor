@@ -18,17 +18,6 @@ router.get('/:user_id', authHelpers.loginRequired, async (req, res, next) => {
   }
 });
 
-router.get('/', async (req, res, next) => {
-  try {
-    const trans = await transactionQueries.getAllTrans()
-    res.send({
-      payload: trans
-    })
-  } catch (err) {
-    next(err)
-  }
-})
-
 router.post('/', authHelpers.loginRequired, async (req, res, next) => {
   try {
     let {user_id, quantity, ticker, price_paid} = req.body
