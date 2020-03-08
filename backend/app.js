@@ -8,8 +8,9 @@ const passport = require('./auth/passport');
 const bodyParser = require('body-parser');
 
 const authRouter = require('./routes/auth');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const transactionRouter = require('./routes/transactions');
 
 var app = express();
 
@@ -36,5 +37,6 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter)
+app.use('/transactions', transactionRouter);
 
 module.exports = app;
