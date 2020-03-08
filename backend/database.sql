@@ -15,12 +15,14 @@ CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users (id),
     quantity INT NOT NULL,
-    ticker VARCHAR NOT NULL
-)
+    ticker VARCHAR NOT NULL,
+    price_paid INT NOT NULL
+);
 
 INSERT INTO users (username, email, password, cash)
     VALUES ('PeteFiorentino', 'PFiorentino54@gmail.com','Spotify123', 5000);
 
-SELECT * FROM users WHERE email = 'PFiorentino54@gmail.com';
+INSERT INTO transactions (user_id, quantity, ticker, price_paid)
+    VALUES(1, 3, 'AAPL', 100);
 
-INSERT INTO 
+SELECT * FROM transactions WHERE user_id = 1;

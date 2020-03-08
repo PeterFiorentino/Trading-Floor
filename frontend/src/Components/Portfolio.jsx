@@ -17,10 +17,12 @@ class Portfolio extends React.Component {
             console.log(price)
         } else {       
             let today = price.data[ 'Meta Data' ][ '3. Last Refreshed' ]
-            let todaysPrice = price.data[ 'Time Series (5min)' ][today]
+            let todaysPrice = price.data[ 'Time Series (5min)' ][today][ '4. close' ]
+            let amountPaid = Number(todaysPrice) * this.state.quantity
             console.log(price)
             console.log(today)
             console.log(todaysPrice)
+            console.log(amountPaid)
         }
     }
 
