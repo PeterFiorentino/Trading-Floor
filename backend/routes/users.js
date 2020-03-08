@@ -20,9 +20,9 @@ router.get('/', authHelpers.loginRequired, async (req, res, next) => {
 router.patch('/', authHelpers.loginRequired, async (req, res, next) => {
   try {
     let { newCash, user_id} = req.body;
-    const newCash = await usersQueries.changeCash(newCash, user_id)
+    const changeCash = await usersQueries.changeCash(newCash, user_id)
     res.send({
-      payload: newCash,
+      payload: changeCash,
       msg: `Changed the amount of money user ${user_id} has available.`,
       err: false
     })

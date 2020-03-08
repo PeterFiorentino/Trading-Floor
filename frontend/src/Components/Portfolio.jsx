@@ -14,27 +14,6 @@ class Portfolio extends React.Component {
         }
     }
 
-    componentDidMount() {
-        console.log(this.state)
-        this.loadTransactions()
-    }
-
-    componentDidUpdate() {
-        this.loadTransactions()
-    }
-
-    loadTransactions = async () => {
-        try {
-            let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
-            console.log(transactionsFromUser.data.payload)
-            this.setState({
-                transactions: transactionsFromUser.data.payload
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     handlePurchase = async (e) => {
         e.preventDefault();
         console.log(this.state.transactions)
@@ -50,6 +29,7 @@ class Portfolio extends React.Component {
             this.setState({
                 cash: this.state.cash - amountPaid
             })
+            let changeCash = await axios.patch('/api/users', {newCash: this.state.cash, user_id: this.state.user_id})
             console.log(price)
             console.log(today)
             console.log(todaysPrice)
@@ -68,8 +48,6 @@ class Portfolio extends React.Component {
             quantity: e.target.value
         })
     }
-
-
 
     render() {
         return(

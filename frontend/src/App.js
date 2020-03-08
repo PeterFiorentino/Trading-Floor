@@ -8,6 +8,7 @@ import NavBar from './Components/NavBar'
 import About from './Components/About'
 import Home from './Components/Home'
 import Portfolio from './Components/Portfolio'
+import Transactions from './Components/Transactions'
 
 import PrivateRoute from './Components/PrivateRoute';
 import AuthContainer from './Containers/AuthContainer';
@@ -75,6 +76,14 @@ class App extends React.Component {
     )
   }
 
+  renderTransaction = (routeProps) => {
+    return (
+      <Transactions 
+        user = {this.state.user}
+      />
+    )
+  }
+
   render() {
     return (
       <div className="App">
@@ -89,6 +98,7 @@ class App extends React.Component {
             <Route path='/signup' render={this.renderAuthContainer} />
             <Route path='/about' user={this.state.user} component={About} />
             <PrivateRoute path='/portfolio' render={this.renderPortfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
+            <PrivateRoute path='/transactions' render={this.renderTransaction} isUserLoggedIn={this.state.isUserLoggedIn} />
             <Route path='/' component={Home} />
           </Switch>
         )}
