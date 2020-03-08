@@ -5,8 +5,8 @@ const createUser = async (user) => {
   const passwordDigest = await authHelpers.hashPassword(user.password);
 
   const insertUserQuery = `
-      INSERT INTO users (username, email, password) 
-        VALUES ($/username/, $/email/, $/password/)
+      INSERT INTO users (username, email, password, cash) 
+        VALUES ($/username/, $/email/, $/password/, 5000.00)
         RETURNING *
     `
 

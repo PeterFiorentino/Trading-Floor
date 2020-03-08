@@ -74,12 +74,11 @@ class App extends React.Component {
           logoutUser={this.logoutUser}
           isUserLoggedIn={this.state.isUserLoggedIn}
         />
-
         <Switch>
 
           <Route path='/login' render={this.renderAuthContainer} />
           <Route path='/signup' render={this.renderAuthContainer} />
-          <Route path='/about' component={About} />
+          <Route path='/about' user={this.state.user} component={About} />
           <PrivateRoute path='/portfolio' component={Portfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
           <Route path='/' component={Home} />
         </Switch>
