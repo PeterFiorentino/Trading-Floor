@@ -12,12 +12,16 @@ class Portfolio extends React.Component {
     handlePurchase = async (e) => {
         e.preventDefault();
         let price = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.state.ticker}&interval=5min&apikey=4IVCYEP8YDVPEZ23`)
-        let today = price.data[ 'Meta Data' ][ '3. Last Refreshed' ]
-        let todaysPrice = price.data[ 'Time Series (5min)' ][today]
-        console.log(price)
-        console.log(today)
-        console.log(todaysPrice)
-        
+        if(price.data[ 'Error Message' ]) {
+            console.log("This ticker is invlaid")
+            console.log(price)
+        } else {       
+            let today = price.data[ 'Meta Data' ][ '3. Last Refreshed' ]
+            let todaysPrice = price.data[ 'Time Series (5min)' ][today]
+            console.log(price)
+            console.log(today)
+            console.log(todaysPrice)
+        }
     }
 
     handleTickerChange = (e) => {
