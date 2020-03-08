@@ -11,5 +11,6 @@ const postTransaction = (user_id, quantity, ticker, price) => {
 }
 
 module.exports = {
-    getTransactionsByUser
+    getTransactionsByUser,
+    postTransaction
 }

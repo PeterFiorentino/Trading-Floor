@@ -18,5 +18,19 @@ router.get('/:user_id', authHelpers.loginRequired, async (req, res, next) => {
   }
 });
 
+router.post('/', authHelpers.loginRequired, async (req, res, next) => {
+  try {
+    let {user_id, quantity, ticker, price} = req.body
+    const newTransaction = await transactionQueries.postTransaction(user_id, quantity, ticker, price)
+    res.send({
+      payload: null,
+      msg: 'New transaction posted',
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
 
 module.exports = router;
