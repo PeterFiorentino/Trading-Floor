@@ -34,4 +34,12 @@ router.post('/logout', authHelpers.loginRequired, (req, res, next) => {
     })
 })
 
+router.get('/isUserLoggedIn', authHelpers.loginRequired, (req, res) => {
+  res.json({
+    payload: req.user,
+    msg: "User is logged in. Session active",
+    err: false
+  })
+})
+
 module.exports = router

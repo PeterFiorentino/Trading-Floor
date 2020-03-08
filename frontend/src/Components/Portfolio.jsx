@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import axios from 'axios';
 
 class Portfolio extends React.Component {
@@ -19,10 +19,17 @@ class Portfolio extends React.Component {
         this.loadTransactions()
     }
 
+    componentDidUpdate() {
+        this.loadTransactions()
+    }
+
     loadTransactions = async () => {
         try {
-            let transactions = axios.get(`http://localhost:3100/api/transactions/${this.state.user_id}`)
-            console.log(transactions)
+            let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
+            console.log(transactionsFromUser.data.payload)
+            this.setState({
+                transactions: transactionsFromUser.data.payload
+            })
         } catch (error) {
             console.log(error)
         }
@@ -30,6 +37,7 @@ class Portfolio extends React.Component {
 
     handlePurchase = async (e) => {
         e.preventDefault();
+        console.log(this.state.transactions)
         let price = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.state.ticker}&interval=5min&apikey=4IVCYEP8YDVPEZ23`)
         if(price.data[ 'Error Message' ]) {
             console.log("This ticker is invlaid")
@@ -38,6 +46,10 @@ class Portfolio extends React.Component {
             let today = price.data[ 'Meta Data' ][ '3. Last Refreshed' ]
             let todaysPrice = price.data[ 'Time Series (5min)' ][today][ '4. close' ]
             let amountPaid = Number(todaysPrice) * this.state.quantity
+            let transaction = await axios.post(`/api/transactions`, {user_id: this.state.user_id, quantity: this.state.quantity, ticker: this.state.ticker, price_paid: Number(todaysPrice)})
+            this.setState({
+                cash: this.state.cash - amountPaid
+            })
             console.log(price)
             console.log(today)
             console.log(todaysPrice)
@@ -68,6 +80,15 @@ class Portfolio extends React.Component {
                     <input type="number" onChange={this.handleQuantityChange}></input>
                     <button type="submit">Purchase</button>
                 </form>
+                {this.state.transactions.map(transaction => {
+                    return (
+                        <div key={transaction.ticker}>
+                            <p>{transaction.ticker}</p>
+                            <p>{transaction.quantity}</p>
+                            <p>{transaction.price_paid}</p>
+                        </div>
+                    )
+                })}
             </div>
         )
     }

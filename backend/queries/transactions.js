@@ -6,11 +6,17 @@ const getTransactionsByUser = (user_id) => {
     return transactions;
 }
 
-const postTransaction = (user_id, quantity, ticker, price) => {
-    const newTransaction = db.none(`INSERT INTO transactions (user_id, quantity, ticker, price) VALUES ($1, $2, $3, $4)`, [user_id, quantity, ticker, price])
+const getAllTrans = () => {
+    const trans = db.any(`SELECT * FROM transactions`);
+    return trans
+}
+const postTransaction = (user_id, quantity, ticker, price_paid) => {
+    const newTransaction = db.none(`INSERT INTO transactions (user_id, quantity, ticker, price_paid) VALUES ($1, $2, $3, $4)`, [user_id, quantity, ticker, price_paid])
+    return newTransaction
 }
 
 module.exports = {
     getTransactionsByUser,
-    postTransaction
+    postTransaction,
+    getAllTrans
 }

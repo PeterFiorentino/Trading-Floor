@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
@@ -34,8 +34,9 @@ class App extends React.Component {
 
   checkUserLoggedIn = async () => {
     try {
-      const { data } = axios.get("/auth/isUserLoggedIn");
-      this.props.setUser(data.payload);
+      const { data } = await axios.get("/api/auth/isUserLoggedIn"); 
+      console.log(data)
+      this.setUser(data.payload);
     } catch (err) {
       if (err.message.includes(401)) {
         this.setState({
@@ -55,7 +56,7 @@ class App extends React.Component {
   logoutUser = async () => {
     console.log('logging out user');
     try {
-      await axios.get('/auth/logout');
+      await axios.get('api/auth/logout');
       this.setState({
         user: null,
         isUserLoggedIn: false
@@ -82,14 +83,15 @@ class App extends React.Component {
           logoutUser={this.logoutUser}
           isUserLoggedIn={this.state.isUserLoggedIn}
         />
-        <Switch>
-
-          <Route path='/login' render={this.renderAuthContainer} />
-          <Route path='/signup' render={this.renderAuthContainer} />
-          <Route path='/about' user={this.state.user} component={About} />
-          <PrivateRoute path='/portfolio' render={this.renderPortfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
-          <Route path='/' component={Home} />
-        </Switch>
+        {this.state.loadingUser ? <div>Loading User</div> : (
+          <Switch>
+            <Route path='/login' render={this.renderAuthContainer} />
+            <Route path='/signup' render={this.renderAuthContainer} />
+            <Route path='/about' user={this.state.user} component={About} />
+            <PrivateRoute path='/portfolio' render={this.renderPortfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
+            <Route path='/' component={Home} />
+          </Switch>
+        )}
       </div>
     );
   }
