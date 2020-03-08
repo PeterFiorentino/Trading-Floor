@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
@@ -66,6 +66,14 @@ class App extends React.Component {
     }
   }
 
+  renderPortfolio = (routeProps) => {
+    return(
+      <Portfolio
+        user = {this.state.user}
+      />
+    )
+  }
+
   render() {
     return (
       <div className="App">
@@ -79,7 +87,7 @@ class App extends React.Component {
           <Route path='/login' render={this.renderAuthContainer} />
           <Route path='/signup' render={this.renderAuthContainer} />
           <Route path='/about' user={this.state.user} component={About} />
-          <PrivateRoute path='/portfolio' component={Portfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
+          <PrivateRoute path='/portfolio' render={this.renderPortfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
           <Route path='/' component={Home} />
         </Switch>
       </div>

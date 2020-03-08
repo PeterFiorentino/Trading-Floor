@@ -2,11 +2,30 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 class Portfolio extends React.Component {
-    state = {
-        username: "",
-        cash: 0,
-        ticker: "",
-        quantity: 0,
+    constructor(props) {
+        super(props)
+        this.state = {
+            user_id: props.user.id,
+            username: props.user.username,
+            cash: props.user.cash,
+            ticker: "",
+            quantity: 0,
+            transactions: []
+        }
+    }
+
+    componentDidMount() {
+        console.log(this.state)
+        this.loadTransactions()
+    }
+
+    loadTransactions = async () => {
+        try {
+            let transactions = axios.get(`http://localhost:3100/api/transactions/${this.state.user_id}`)
+            console.log(transactions)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     handlePurchase = async (e) => {

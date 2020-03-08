@@ -22,7 +22,7 @@ class AuthContainer extends Component {
         // make network request to /auth/signup to register user
         console.log('Signing up user ...')
         try {
-            await axios.post('http://localhost:3100/auth/signup', this.state)
+            await axios.post('http://localhost:3100/api/auth/signup', this.state)
             this.loginUser()
         } catch (err) {
             console.log(err)
@@ -32,7 +32,7 @@ class AuthContainer extends Component {
     loginUser = async () => {
         // make network request to /auth/signup to register user
         try {
-            const { data } = await axios.post('http://localhost:3100/auth/login', {email : this.state.email, password: this.state.password} )
+            const { data } = await axios.post('http://localhost:3100/api/auth/login', {email : this.state.email, password: this.state.password} )
 
             const user = data.payload
             this.props.setUser(user)
