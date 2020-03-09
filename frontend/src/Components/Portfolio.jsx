@@ -11,7 +11,8 @@ class Portfolio extends React.Component {
             cash: props.user.cash,
             ticker: "",
             quantity: 0,
-            transactions: {}
+            transactions: {},
+            openingPrices: {}
         }
     }
 
@@ -25,8 +26,11 @@ class Portfolio extends React.Component {
             let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
             let transactions = transactionsFromUser.data.payload;
             let transObj = {};
+            let tickers = [];
             for (let i of transactions) {
+                console.log(i)
                 if(!transObj[i.ticker]) {
+                    tickers.push(i.ticker)
                     transObj[i.ticker] = {}
                     transObj[i.ticker].moneySpent = Number(i.price_paid) * Number(i.quantity)
                     transObj[i.ticker].quantity = i.quantity
@@ -39,6 +43,12 @@ class Portfolio extends React.Component {
             this.setState({
                 transactions: transObj
             })
+            for(let stock of tickers) {
+                let prices = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=4IVCYEP8YDVPEZ23`) 
+                let today = prices.data[ 'Meta Data' ][ '3. Last Refreshed' ]
+                console.log(today)
+                // console.log(prices.data[ 'Time Series (Daily)' ][today][ '1. open' ]);
+            }
         } catch (error) {
             console.log(error)
         }
@@ -93,7 +103,7 @@ class Portfolio extends React.Component {
                 {Object.keys(this.state.transactions).map(stock => {
                     console.log(stock)
                     return(
-                        <p>{stock} - {this.state.transactions[stock].quantity} Shares   ${this.state.transactions[stock].moneySpent}</p>
+                        <p style={{color:'red'}}>{stock} - {this.state.transactions[stock].quantity} Shares   ${this.state.transactions[stock].moneySpent}</p>
                     )
                 })}
             </div>
