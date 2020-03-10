@@ -5,15 +5,75 @@
 .LoginAndSignUpDiv {
   border-style: solid;
   margin: auto;
-  width: 50%;
+  width: 33%;
   margin-top: 10%;
   padding: 1%;
 }
 
 .signup-input {
   margin: 1%;
+  width: 80%;
 }
 
 .login-input {
   margin: 1%;
+  width: 80%;
+}
+
+#portfolio {
+  display: flex;
+  margin-left: 25%;
+  margin-top: 10%;
+}
+
+.audit {
+  border-right: solid;
+  margin-right: 2%;
+  padding: 2%;
+}
+
+#purchaseForm {
+  display: flex;
+  flex-direction: column;
+  min-width: 375px;
+  margin: auto;
+}
+
+.individualAudit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.auditInfo {
+  text-align: left;
+}
+
+.main-nav {
+  justify-content: space-between;
+}
+
+#cashPurchaseConfirm {
+  display: flex;
+  flex-direction: column;
+}
+
+#transactions {
+  text-align: left;
+  margin-left: 25%;
+  margin-top: 10%;
+}
+
+#portfolioLink  {
+  border-right: solid;
+  margin: 1%;
+  padding-right: 1%
+}
+
+.app-nav {
+  text-align: end;
+}
+
+.individualTransaction {
+  border-bottom: solid;
+  width: 25%;
 }

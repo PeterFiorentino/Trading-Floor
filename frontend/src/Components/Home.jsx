@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => {
     return(
         <div>
-            <p>Stock exchange</p>
+            <p>Stock Trading App</p>
         </div>
     )
 }

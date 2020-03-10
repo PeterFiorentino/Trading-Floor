@@ -5,7 +5,6 @@ import axios from 'axios';
 import './App.css';
 
 import NavBar from './Components/NavBar'
-import About from './Components/About'
 import Home from './Components/Home'
 import Portfolio from './Components/Portfolio'
 import Transactions from './Components/Transactions'
@@ -96,7 +95,6 @@ class App extends React.Component {
           <Switch>
             <Route path='/login' render={this.renderAuthContainer} />
             <Route path='/signup' render={this.renderAuthContainer} />
-            <Route path='/about' user={this.state.user} component={About} />
             <PrivateRoute path='/portfolio' render={this.renderPortfolio} isUserLoggedIn={this.state.isUserLoggedIn} />
             <PrivateRoute path='/transactions' render={this.renderTransaction} isUserLoggedIn={this.state.isUserLoggedIn} />
             <Route path='/' component={Home} />

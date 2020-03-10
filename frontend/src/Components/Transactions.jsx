@@ -29,10 +29,11 @@ class Transactions extends React.Component {
 
     render() {
         return(
-            <div>
+            <div id="transactions">
+                <h3>Transactions</h3>
                 {this.state.transactions.map(transaction => {
                     return (
-                        <div key={transaction.ticker + transaction.quantity}>
+                        <div className="individualTransaction" key={transaction.ticker + transaction.quantity}>
                             <p>BUY ({transaction.ticker}) - {transaction.quantity} shares @ {transaction.price_paid}</p>
                         </div>
                     )

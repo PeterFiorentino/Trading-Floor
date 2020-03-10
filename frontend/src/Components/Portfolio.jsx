@@ -13,6 +13,7 @@ class Portfolio extends React.Component {
             ticker: "",
             quantity: 0,
             transactions: {},
+            portfolioValue: 0,
             purchaseConfirmation: ""
         }
     }
@@ -38,6 +39,8 @@ class Portfolio extends React.Component {
                     transObj[i.ticker].openingPrice = Number(openingPrice)
                     transObj[i.ticker].quantity = i.quantity
 
+                    
+
                     if(openingPrice > currentPrice) {
                         transObj[i.ticker].color = "red"
                     } else if (currentPrice > openingPrice) {
@@ -45,6 +48,10 @@ class Portfolio extends React.Component {
                     } else {
                         transObj[i.ticker].color = "gray"
                     }
+
+                    this.setState({
+                        portfolioValue: this.state.portfolioValue + Number(currentPrice)
+                    })
                 } else {
                     transObj[i.ticker].quantity += i.quantity
                 }
@@ -112,19 +119,29 @@ class Portfolio extends React.Component {
 
     render() {
         return(
-            <div>
-                <p>${this.state.cash}</p>
-                <form onSubmit={this.handlePurchase}>
-                    <input type="text" placeholder="ticker" onChange={this.handleTickerChange} value={this.state.ticker}></input>
-                    <input type="number" onChange={this.handleQuantityChange} value={this.state.quantity}></input>
-                    <button type="submit">Purchase</button>
-                </form>
-                <p>{this.state.purchaseConfirmation}</p>
-                {Object.keys(this.state.transactions).map(stock => {
-                    return(
-                        <p><span style={{color: this.state.transactions[stock].color}}>{stock}</span> - {this.state.transactions[stock].quantity} Shares   <span style={{color: this.state.transactions[stock].color}}>${(this.state.transactions[stock].currentPrice) * this.state.transactions[stock].quantity}</span></p>
-                    )
-                })}
+            <div id="portfolio">
+                <div className="audit">
+                   <h3>Portfolio (${this.state.portfolioValue})</h3>
+                    {Object.keys(this.state.transactions).map(stock => {
+                        return(
+                            <div className="individualAudit">
+                                <p className="auditInfo"><span style={{color: this.state.transactions[stock].color}}>{stock}</span> - {this.state.transactions[stock].quantity} Shares </p>  
+                                <p className="auditInfo"><span style={{color: this.state.transactions[stock].color}}>${(this.state.transactions[stock].currentPrice) * this.state.transactions[stock].quantity}</span></p>
+                            </div>
+                        )
+                    })}
+                </div>
+                <div id="cashPurchaseConfirm">
+                <p>Cash - ${this.state.cash}</p>
+                    <div className="purchaseForm">
+                        <form onSubmit={this.handlePurchase} id="purchaseForm">
+                            <input type="text" placeholder="ticker" onChange={this.handleTickerChange} value={this.state.ticker}></input>
+                            <input type="number" onChange={this.handleQuantityChange} value={this.state.quantity}></input>
+                            <button type="submit">Buy</button>
+                        </form>
+                    </div>
+                    <p>{this.state.purchaseConfirmation}</p>
+                </div>
             </div>
         )
     }

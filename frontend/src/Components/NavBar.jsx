@@ -2,13 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const NavBar = ({ logoutUser, isUserLoggedIn, user }) => {
+const NavBar = ({ logoutUser, isUserLoggedIn }) => {
     if (isUserLoggedIn) {
         return (
-            <nav className='main-nav'>
-                <Link to='/'>Home</Link>{" "}
-                <Link to='/about'>About</Link>
-                <Link to='/portfolio'>Portfolio</Link>
+            <nav className='app-nav'>
+                <Link id="portfolioLink" to='/portfolio'>Portfolio</Link>
                 <Link to='/transactions'>Transactions</Link>
                 
                 <button className='logout-button' onClick={logoutUser}>Log Out</button>
@@ -17,11 +15,9 @@ const NavBar = ({ logoutUser, isUserLoggedIn, user }) => {
     }
 
     return (
-        <nav className='main-nav'>
-            <Link to='/'>Home</Link>{" "}
-            <Link to='/login'>Log-In</Link>{" "}
-            <Link to='/signup'>Sign-Up</Link>{" "}
-            <Link to='/about'>About</Link>
+        <nav className='signIn-nav'>
+            <Link to='/login'>Sign-In</Link>{"   "}
+            <Link to='/signup'>Register</Link>{"   "}
         </nav>
     )
 }
