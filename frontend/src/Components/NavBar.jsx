@@ -22,8 +22,6 @@ const NavBar = ({ logoutUser, isUserLoggedIn, user }) => {
             <Link to='/login'>Log-In</Link>{" "}
             <Link to='/signup'>Sign-Up</Link>{" "}
             <Link to='/about'>About</Link>
-            {/* <Link to='/portfolio'>Portfolio</Link>
-            <Link to='/transactions'>Transactions</Link> */}
         </nav>
     )
 }

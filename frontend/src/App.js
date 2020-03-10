@@ -57,7 +57,7 @@ class App extends React.Component {
   logoutUser = async () => {
     console.log('logging out user');
     try {
-      await axios.get('api/auth/logout');
+      await axios.post('api/auth/logout');
       this.setState({
         user: null,
         isUserLoggedIn: false

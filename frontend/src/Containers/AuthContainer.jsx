@@ -79,9 +79,6 @@ class AuthContainer extends Component {
                         </Switch> 
                     )
                 }
-                <Link to='/Home'>
-                    <button className='submit-button'>Back to Home</button>
-                </Link>
             </div>
         )
     }

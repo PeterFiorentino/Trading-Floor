@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Transactions from './Transactions';
+import api_key from '../api_key'
 
 class Portfolio extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Portfolio extends React.Component {
             ticker: "",
             quantity: 0,
             transactions: {},
-            openingPrices: {}
+            purchaseConfirmation: ""
         }
     }
 
@@ -26,16 +27,25 @@ class Portfolio extends React.Component {
             let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
             let transactions = transactionsFromUser.data.payload;
             let transObj = {};
-            let tickers = [];
             for (let i of transactions) {
-                console.log(i)
                 if(!transObj[i.ticker]) {
-                    tickers.push(i.ticker)
+                    let prices = await axios.get(`https://sandbox.iexapis.com/stable/stock/${i.ticker}/quote?token=${api_key}`) 
+                    let openingPrice = prices.data.previousClose;
+                    let currentPrice = prices.data.latestPrice
+
                     transObj[i.ticker] = {}
-                    transObj[i.ticker].moneySpent = Number(i.price_paid) * Number(i.quantity)
+                    transObj[i.ticker].currentPrice = Number(currentPrice)
+                    transObj[i.ticker].openingPrice = Number(openingPrice)
                     transObj[i.ticker].quantity = i.quantity
+
+                    if(openingPrice > currentPrice) {
+                        transObj[i.ticker].color = "red"
+                    } else if (currentPrice > openingPrice) {
+                        transObj[i.ticker].color = "green"
+                    } else {
+                        transObj[i.ticker].color = "gray"
+                    }
                 } else {
-                    transObj[i.ticker].moneySpent += (Number(i.price_paid) * Number(i.quantity))
                     transObj[i.ticker].quantity += i.quantity
                 }
             }
@@ -43,12 +53,6 @@ class Portfolio extends React.Component {
             this.setState({
                 transactions: transObj
             })
-            for(let stock of tickers) {
-                let prices = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=4IVCYEP8YDVPEZ23`) 
-                let today = prices.data[ 'Meta Data' ][ '3. Last Refreshed' ]
-                console.log(today)
-                // console.log(prices.data[ 'Time Series (Daily)' ][today][ '1. open' ]);
-            }
         } catch (error) {
             console.log(error)
         }
@@ -56,26 +60,41 @@ class Portfolio extends React.Component {
 
     handlePurchase = async (e) => {
         e.preventDefault();
-        console.log(this.state.transactions)
-        let price = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.state.ticker}&interval=5min&apikey=4IVCYEP8YDVPEZ23`)
-        if(price.data[ 'Error Message' ]) {
-            console.log("This ticker is invlaid")
-            console.log(price)
-        } else {       
-            let today = price.data[ 'Meta Data' ][ '3. Last Refreshed' ]
-            let todaysPrice = price.data[ 'Time Series (5min)' ][today][ '4. close' ]
-            let amountPaid = Number(todaysPrice) * this.state.quantity
-            let transaction = await axios.post(`/api/transactions`, {user_id: this.state.user_id, quantity: this.state.quantity, ticker: this.state.ticker, price_paid: Number(todaysPrice)})
+        if(this.state.quantity <= 0) {
             this.setState({
-                cash: this.state.cash - amountPaid,
-                quantity: 0,
-                ticker: ""
-            })
-            let changeCash = await axios.patch('/api/users', {newCash: this.state.cash, user_id: this.state.user_id})
-            console.log(price)
-            console.log(today)
-            console.log(todaysPrice)
-            console.log(amountPaid)
+                purchaseConfirmation: `Quantity of shares purchased needs to be greater than 0.`
+            }) 
+        } else {
+            try{
+                let price = await axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?token=${api_key}`)
+                let todaysPrice = price.data.latestPrice
+                let amountPaid = Number(todaysPrice) * this.state.quantity
+
+                if(amountPaid > this.state.cash) {
+                    this.setState({
+                        purchaseConfirmation: `You don't have enough cash to buy ${this.state.quantity} shares of ${this.state.ticker}`
+                    }) 
+                    return
+                }
+
+                let transaction = await axios.post(`/api/transactions`, {user_id: this.state.user_id, quantity: this.state.quantity, ticker: this.state.ticker, price_paid: Number(todaysPrice)})
+                this.setState({
+                    purchaseConfirmation: `Successfully bought ${this.state.quantity} shares of ${this.state.ticker}`,
+                    cash: this.state.cash - amountPaid,
+                    quantity: 0,
+                    ticker: ""
+                })
+                let changeCash = await axios.patch('/api/users', {newCash: this.state.cash, user_id: this.state.user_id})
+                console.log(price)
+                console.log(todaysPrice)
+                console.log(amountPaid)
+                this.loadTransactions()
+            } catch (error) {
+                console.log(error)
+                this.setState({
+                    purchaseConfirmation: `${this.state.ticker} is not a vaild ticker.`
+                }) 
+            }
         }
     }
 
@@ -100,10 +119,10 @@ class Portfolio extends React.Component {
                     <input type="number" onChange={this.handleQuantityChange} value={this.state.quantity}></input>
                     <button type="submit">Purchase</button>
                 </form>
+                <p>{this.state.purchaseConfirmation}</p>
                 {Object.keys(this.state.transactions).map(stock => {
-                    console.log(stock)
                     return(
-                        <p style={{color:'red'}}>{stock} - {this.state.transactions[stock].quantity} Shares   ${this.state.transactions[stock].moneySpent}</p>
+                        <p><span style={{color: this.state.transactions[stock].color}}>{stock}</span> - {this.state.transactions[stock].quantity} Shares   <span style={{color: this.state.transactions[stock].color}}>${(this.state.transactions[stock].currentPrice) * this.state.transactions[stock].quantity}</span></p>
                     )
                 })}
             </div>
