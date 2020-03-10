@@ -3,7 +3,7 @@ var router = express.Router();
 const authHelpers = require('../auth/helpers')
 const transactionQueries = require('../queries/transactions')
 
-
+//Calls the function containing the query to get all the transactions for a user
 router.get('/:user_id', authHelpers.loginRequired, async (req, res, next) => {
   try {
     const user_id = req.params.user_id;
@@ -18,6 +18,7 @@ router.get('/:user_id', authHelpers.loginRequired, async (req, res, next) => {
   }
 });
 
+//Calls the function containing the query to post a new transaction for the user
 router.post('/', authHelpers.loginRequired, async (req, res, next) => {
   try {
     let {user_id, quantity, ticker, price_paid} = req.body

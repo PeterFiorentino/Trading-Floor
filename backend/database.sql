@@ -1,7 +1,7 @@
-DROP DATABASE if exists stock_exchange;
-CREATE DATABASE stock_exchange;
+-- DROP DATABASE if exists stock_exchange;
+-- CREATE DATABASE stock_exchange;
 
-\c stock_exchange
+-- \c stock_exchange
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,

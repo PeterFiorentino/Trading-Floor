@@ -67,6 +67,7 @@ class App extends React.Component {
     }
   }
 
+  //Sends props to the Portfoilio Component
   renderPortfolio = (routeProps) => {
     return(
       <Portfolio
@@ -75,6 +76,8 @@ class App extends React.Component {
     )
   }
 
+
+  //Sends props to the Transaction Component
   renderTransaction = (routeProps) => {
     return (
       <Transactions 

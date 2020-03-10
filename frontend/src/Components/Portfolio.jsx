@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import Transactions from './Transactions';
 import api_key from '../api_key'
 
 class Portfolio extends React.Component {
@@ -23,6 +22,8 @@ class Portfolio extends React.Component {
         this.loadTransactions()
     }
 
+    //Gets all the transactions for the logged in user. Then the function makes an API request based on the tickers in the transaction table. 
+    //The function then makes an object it stores in the state that contains information on each stock the user owns shares in.
     loadTransactions = async () => {
         try {
             let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
@@ -65,6 +66,10 @@ class Portfolio extends React.Component {
         }
     }
 
+
+    //Runs when the user hits the buy button. This function checks to make sure the quantity is above 0. If it is then it makes a request to the API. 
+    //After it checks to make sure the user has enough money to buy the requested shares. If that is successful, the function makes a post request to the 
+    //database to add the transaction to the database. Then it patches the user table in the database to reflect how much money the user has.
     handlePurchase = async (e) => {
         e.preventDefault();
         if(this.state.quantity <= 0) {
@@ -105,12 +110,14 @@ class Portfolio extends React.Component {
         }
     }
 
+    //Capitalizing the user's input and puts ticker into the state
     handleTickerChange = (e) => {
         this.setState({
-            ticker: e.target.value
+            ticker: e.target.value.toUpperCase()
         })
     }
 
+    //Puts the user input for quantity into the state
     handleQuantityChange = (e) => {
         this.setState({
             quantity: e.target.value

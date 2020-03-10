@@ -4,6 +4,7 @@ const authHelpers = require('../auth/helpers')
 const usersQueries = require('../queries/users')
 
 
+//Calls the function that contains the query to get all users
 router.get('/', authHelpers.loginRequired, async (req, res, next) => {
   try {
     const users = await usersQueries.getAllUsers()
@@ -17,6 +18,8 @@ router.get('/', authHelpers.loginRequired, async (req, res, next) => {
   }
 });
 
+
+//Calls the function that contains the query to change the amount of cash a user has
 router.patch('/', authHelpers.loginRequired, async (req, res, next) => {
   try {
     let { newCash, user_id} = req.body;

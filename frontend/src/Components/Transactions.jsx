@@ -14,7 +14,7 @@ class Transactions extends React.Component {
         console.log(this.state)
         this.loadTransactions()
     }
-
+    //Makes an API request to get all the transactions in the users history.
     loadTransactions = async () => {
         try {
             let transactionsFromUser = await axios.get(`/api/transactions/${this.state.user_id}`)
