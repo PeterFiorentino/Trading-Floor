@@ -7,7 +7,7 @@ class Portfolio extends React.Component {
         this.state = {
             user_id: props.user.id,
             username: props.user.username,
-            cash: props.user.cash,
+            cash: 0,
             ticker: "",
             quantity: 0,
             transactions: {},
@@ -19,6 +19,7 @@ class Portfolio extends React.Component {
     componentDidMount() {
         console.log(this.state)
         this.loadTransactions()
+        this.getCash()
     }
 
     //Gets all the transactions for the logged in user. Then the function makes an API request based on the tickers in the transaction table. 
@@ -106,6 +107,15 @@ class Portfolio extends React.Component {
                     purchaseConfirmation: `${this.state.ticker} is not a vaild ticker.`
                 }) 
             }
+        }
+    }
+
+    getCash = async () => {
+        try{
+             let getCash = await axios.get(`/api/users/${this.state.user_id}`)
+             console.log(getCash)
+        } catch (error) {
+            console.log(error);
         }
     }
 
