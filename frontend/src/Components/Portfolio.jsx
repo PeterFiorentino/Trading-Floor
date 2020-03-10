@@ -7,6 +7,7 @@ class Portfolio extends React.Component {
         this.state = {
             user_id: props.user.id,
             username: props.user.username,
+            email: props.user.email
             cash: 0,
             ticker: "",
             quantity: 0,
@@ -112,7 +113,7 @@ class Portfolio extends React.Component {
 
     getCash = async () => {
         try{
-             let getCash = await axios.get(`/api/users/${this.state.user_id}`)
+             let getCash = await axios.get(`/api/users/${this.state.email}`)
              console.log(getCash)
         } catch (error) {
             console.log(error);
