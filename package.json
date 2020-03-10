@@ -1,9 +1,9 @@
 {
     "name": "petefiorentinopart2",
-    "version": "1",
+    "version": "0.0.1",
     "scripts": {
-        "start": "node ./server/bin/www",
-        "heroku-postbuild": "cd server && npm install && cd ../client && npm install --only=prod && npm run build"
+        "start": "node ./backend/bin/www",
+        "heroku-postbuild": "cd backend && npm install && cd ../frontend && npm install --only=prod && npm run build"
     },
     "dependencies": {
         "bcrypt": "^4.0.0",
