@@ -24,7 +24,7 @@ router.get('/:email', authHelpers.loginRequired, async (req, res, next) => {
     const user = await usersQueries.getUserByEmail(req.body.email)
     res.send({
       payload: user,
-      msg: "Retrieved all users",
+      msg: "Retrieved user by email",
       err: false
     })
   } catch (error) {
