@@ -7,7 +7,7 @@ class Portfolio extends React.Component {
         this.state = {
             user_id: props.user.id,
             username: props.user.username,
-            email: props.user.email
+            email: props.user.email,
             cash: 0,
             ticker: "",
             quantity: 0,
