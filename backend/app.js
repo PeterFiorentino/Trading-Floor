@@ -7,7 +7,9 @@ const session = require('express-session');
 const passport = require('./auth/passport');
 const bodyParser = require('body-parser');
 
-require('dotenv').config()
+if(process.env.NODE_ENV !== "production")  {
+    require('dotenv').config()
+}
 
 const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
