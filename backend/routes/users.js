@@ -4,6 +4,21 @@ const authHelpers = require('../auth/helpers')
 const usersQueries = require('../queries/users')
 
 
+//Calls the function that contains the query to get a user by email
+router.get('/:email', authHelpers.loginRequired, async (req, res, next) => {
+  try {
+    let email = req.params.email;
+    let user = await usersQueries.getUserByEmail(email)
+    res.send({
+      payload: user,
+      msg: "Retrieved a single user by email",
+      err: false
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
 //Calls the function that contains the query to get all users
 router.get('/', authHelpers.loginRequired, async (req, res, next) => {
   try {
@@ -17,6 +32,7 @@ router.get('/', authHelpers.loginRequired, async (req, res, next) => {
     next(err)
   }
 });
+
 
 
 //Calls the function that contains the query to change the amount of cash a user has
