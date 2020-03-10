@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import api_key from '../api_key'
 
 class Portfolio extends React.Component {
     constructor(props) {
@@ -31,7 +30,7 @@ class Portfolio extends React.Component {
             let transObj = {};
             for (let i of transactions) {
                 if(!transObj[i.ticker]) {
-                    let prices = await axios.get(`https://sandbox.iexapis.com/stable/stock/${i.ticker}/quote?token=${api_key}`) 
+                    let prices = await axios.get(`https://sandbox.iexapis.com/stable/stock/${i.ticker}/quote?token=Tsk_cb83fd8c89d14e2487057caf4f286c56`) 
                     let openingPrice = prices.data.previousClose;
                     let currentPrice = prices.data.latestPrice
 
@@ -78,7 +77,7 @@ class Portfolio extends React.Component {
             }) 
         } else {
             try{
-                let price = await axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?token=${api_key}`)
+                let price = await axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?token=Tsk_cb83fd8c89d14e2487057caf4f286c56`)
                 let todaysPrice = price.data.latestPrice
                 let amountPaid = Number(todaysPrice) * this.state.quantity
 
