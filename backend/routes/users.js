@@ -18,20 +18,6 @@ router.get('/', authHelpers.loginRequired, async (req, res, next) => {
   }
 });
 
-//Calls the function that contains the query to get a user by their email
-// router.get('/:email', authHelpers.loginRequired, async (req, res, next) => {
-//   try {
-//     const user = await usersQueries.getUserByEmail(req.body.email)
-//     res.send({
-//       payload: user,
-//       msg: "Retrieved user by email",
-//       err: false
-//     })
-//   } catch (error) {
-//     next(error)
-//   }
-// }) 
-
 
 //Calls the function that contains the query to change the amount of cash a user has
 router.patch('/', authHelpers.loginRequired, async (req, res, next) => {
