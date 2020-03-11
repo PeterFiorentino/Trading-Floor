@@ -16,6 +16,7 @@ const LoginForm = ({
 
   return (
     <div className='form-container'>
+      <div className="stockPic"></div>
       <div className="LoginAndSignUpDiv">
         <h2> Sign In </h2>
         <form onSubmit={handleSubmit}>
