@@ -19,7 +19,6 @@ router.get('/', authHelpers.loginRequired, async (req, res, next) => {
 });
 
 
-
 //Calls the function that contains the query to change the amount of cash a user has
 router.patch('/', authHelpers.loginRequired, async (req, res, next) => {
   try {

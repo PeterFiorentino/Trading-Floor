@@ -20,7 +20,6 @@ class Portfolio extends React.Component {
     componentDidMount() {
         console.log(this.state)
         this.loadTransactions()
-        this.getCash()
     }
 
     //Gets all the transactions for the logged in user. Then the function makes an API request based on the tickers in the transaction table. 
@@ -111,14 +110,14 @@ class Portfolio extends React.Component {
         }
     }
 
-    getCash = async () => {
-        try{
-             let getCash = await axios.get(`/api/users/${this.state.email}`)
-             console.log(getCash)
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // getCash = async () => {
+    //     try{
+    //          let getCash = await axios.get(`/api/users/${this.state.email}`)
+    //          console.log(getCash)
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     //Capitalizing the user's input and puts ticker into the state
     handleTickerChange = (e) => {
