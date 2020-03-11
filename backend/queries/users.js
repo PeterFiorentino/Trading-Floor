@@ -25,7 +25,7 @@ const createUser = async (user) => {
 
 //Contains the query to get a user by email
 const getUserByEmail = async (email) => {
-  const user = await db.any("SELECT * FROM users WHERE email = $1", [email])
+  const user = await db.oneOrNone("SELECT * FROM users WHERE email = $1", [email])
   return user;
 }
 
