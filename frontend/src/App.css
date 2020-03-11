@@ -80,5 +80,8 @@
 
 .stockPic {
   width: 50%;
+}
 
+.form-container {
+  display: flex;
 }
