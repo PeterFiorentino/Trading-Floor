@@ -154,9 +154,9 @@ class Portfolio extends React.Component {
                 <p>Cash - ${this.state.cash}</p>
                     <div className="purchaseForm">
                         <form onSubmit={this.handlePurchase} id="purchaseForm">
-                            <input type="text" placeholder="ticker" onChange={this.handleTickerChange} value={this.state.ticker}></input>
-                            <input type="number" onChange={this.handleQuantityChange} value={this.state.quantity}></input>
-                            <button type="submit">Buy</button>
+                            <input type="text" placeholder="ticker" onChange={this.handleTickerChange} value={this.state.ticker} className="purchaseInput"></input>
+                            <input type="number" onChange={this.handleQuantityChange} value={this.state.quantity} className="purchaseInput"></input>
+                            <button type="submit" className="purchaseInput">Buy</button>
                         </form>
                     </div>
                     <p>{this.state.purchaseConfirmation}</p>
