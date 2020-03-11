@@ -16,7 +16,9 @@ const LoginForm = ({
 
   return (
     <div className='form-container'>
-      <div className="stockPic"></div>
+      <div className="stockPic">
+        <img  src='https://media.brstatic.com/2019/03/22142110/How-to-trade-stocks.jpg'  />
+      </div>
       <div className="LoginAndSignUpDiv">
         <h2> Sign In </h2>
         <form onSubmit={handleSubmit}>
