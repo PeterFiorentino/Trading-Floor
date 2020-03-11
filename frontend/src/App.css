@@ -1,4 +1,4 @@
-html, body, #root, .App, .main, .stockPic, .stockPic > img {
+html, body, #root, .App, .main, .form-container, .stockPic, .stockPic > img {
   height: 100%;
 }
 
@@ -54,6 +54,8 @@ html, body, #root, .App, .main, .stockPic, .stockPic > img {
 
 .main-nav {
   justify-content: space-between;
+  height: 5%;
+  background-color: aqua;
 }
 
 #cashPurchaseConfirm {
