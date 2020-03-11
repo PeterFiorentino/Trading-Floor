@@ -114,7 +114,9 @@ class Portfolio extends React.Component {
     getCash = async () => {
         try{
              let getCash = await axios.get(`/api/users/${this.state.email}`)
-             console.log(getCash)
+             this.setState({
+                 cash: getCash.data.payload.cash
+             })
         } catch (error) {
             console.log(error);
         }
@@ -138,7 +140,7 @@ class Portfolio extends React.Component {
         return(
             <div id="portfolio">
                 <div className="audit">
-                   <h3>Portfolio (${this.state.portfolioValue})</h3>
+                   <h3>{this.state.username}'s Portfolio (${this.state.portfolioValue})</h3>
                     {Object.keys(this.state.transactions).map(stock => {
                         return(
                             <div className="individualAudit">
