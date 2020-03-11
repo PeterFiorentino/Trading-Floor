@@ -1,5 +1,11 @@
 # Winter2020Part2
 
+To Log in as an existing user:
+      email: PFiorentino@gmail.com
+      password: abc123
+      
+Feel free to create a new user though!
+
 A Full Stack react app that uses a SQL database. 
 
 There is a home page that gives you the option to go to the Sign-In page or Register a new user.
