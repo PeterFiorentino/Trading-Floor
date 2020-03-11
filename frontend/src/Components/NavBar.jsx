@@ -18,7 +18,7 @@ const NavBar = ({ logoutUser, isUserLoggedIn }) => {
     //If the user is not logged in, they will get this NavBar instead
     return (
         <nav className='signIn-nav'>
-            <Link to='/login'>Sign-In</Link>{"   "}
+            <Link id="signInLink" to='/login'>Sign-In</Link>{"   "}
             <Link to='/signup'>Register</Link>{"   "}
         </nav>
     )

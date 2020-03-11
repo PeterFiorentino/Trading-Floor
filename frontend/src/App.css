@@ -52,10 +52,6 @@ html, body, #root, .App, .main, .form-container, .stockPic, .stockPic > img {
   text-align: left;
 }
 
-.main-nav, .signIn-nav {
-  justify-content: space-between;
-  height: 5%;
-}
 
 #cashPurchaseConfirm {
   display: flex;
@@ -68,13 +64,14 @@ html, body, #root, .App, .main, .form-container, .stockPic, .stockPic > img {
   margin-top: 10%;
 }
 
-#portfolioLink  {
+#portfolioLink, #signInLink  {
   border-right: solid;
   margin: 1%;
   padding-right: 1%
 }
 
-.app-nav {
+.app-nav, .signIn-nav {
+  height: 5%;
   text-align: end;
 }
 
