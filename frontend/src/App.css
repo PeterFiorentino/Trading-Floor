@@ -52,10 +52,9 @@ html, body, #root, .App, .main, .form-container, .stockPic, .stockPic > img {
   text-align: left;
 }
 
-.main-nav {
+.main-nav, .signIn-nav {
   justify-content: space-between;
   height: 5%;
-  background-color: aqua;
 }
 
 #cashPurchaseConfirm {
