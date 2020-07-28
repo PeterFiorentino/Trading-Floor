@@ -1,5 +1,12 @@
 # Trading Floor
 
+
+./frontend - npm start
+./backend - npm run start:dev
+
+![alt text](https://www.peter-fiorentino.com/static/media/TradingFloor.a8db9845.png) 
+
+
 To Log in as an existing user:
       email: PFiorentino@gmail.com
       password: abc123
