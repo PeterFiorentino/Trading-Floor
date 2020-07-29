@@ -1,8 +1,8 @@
 # Trading Floor
 
-
-./frontend - npm start
-./backend - npm run start:dev
+# Setup Instructions
+`./frontend - npm start`<br />
+`./backend - npm run start:dev`
 
 ![alt text](https://www.peter-fiorentino.com/static/media/TradingFloor.a8db9845.png) 
 
